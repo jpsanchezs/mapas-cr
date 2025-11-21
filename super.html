@@ -72,12 +72,30 @@
   <script>
     const map = L.map('map').setView([9.9, -84.0], 9);
 
+    // Tiles raster
     L.tileLayer('./Super/{z}/{x}/{y}.png', {
       attribution: 'Datos: TileMill - Gasolina Súper',
       minZoom: 8,
       maxZoom: 12,
       tileSize: 256
     }).addTo(map);
+
+    // GeoJSON con datos exactos (en raíz)
+    fetch('./super.geojson')
+      .then(res => res.json())
+      .then(geojson => {
+        L.geoJSON(geojson, {
+          onEachFeature: function (feature, layer) {
+            const p = feature.properties;
+            layer.bindPopup(
+              `<b>${p.NCANTON}</b><br>Súper: ${Number(p.SUPER_NUM).toLocaleString('es-CR')} m³`
+            );
+            layer.on('mouseover', function () { this.openPopup(); });
+            layer.on('mouseout', function () { this.closePopup(); });
+          },
+          style: { color: '#333', weight: 1, fillOpacity: 0 }
+        }).addTo(map);
+      });
 
     L.control.scale({ metric: true, imperial: false, position: 'bottomleft' }).addTo(map);
   </script>

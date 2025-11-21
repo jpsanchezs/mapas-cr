@@ -61,20 +61,43 @@
   <div id="map"></div>
   <div class="legend">
     <h4>Cantones destacados</h4>
-    <div class="legend-item"><div class="legend-color" style="background:#c6dbef;"></div><span>Ventas mínimas (Q1)</span></div>
-    <div class="legend-item"><div class="legend-color" style="background:#2171b5;"></div><span>Ventas máximas (Q3 y Q4)</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#c6dbef;"></div><span>Ventas mínimas</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#2171b5;"></div><span>Ventas máximas</span></div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script>
     const map = L.map('map').setView([9.9, -84.0], 9);
 
+    // Tiles raster
     L.tileLayer('./MinMax/{z}/{x}/{y}.png', {
       attribution: 'Datos: TileMill - Cantones extremos',
       minZoom: 8,
       maxZoom: 12,
       tileSize: 256
     }).addTo(map);
+
+    // GeoJSON con datos exactos
+    fetch('./ventas.geojson')
+      .then(res => res.json())
+      .then(geojson => {
+        L.geoJSON(geojson, {
+          onEachFeature: function (feature, layer) {
+            const p = feature.properties;
+            let contenido = `<b>${p.NCANTON}</b>`;
+            if (p.MINIMO_NUM !== null && p.MINIMO_NUM !== undefined) {
+              contenido += `<br>Mínimo: ${Number(p.MINIMO_NUM).toLocaleString('es-CR')} m³`;
+            }
+            if (p.MAXIMO_NUM !== null && p.MAXIMO_NUM !== undefined) {
+              contenido += `<br>Máximo: ${Number(p.MAXIMO_NUM).toLocaleString('es-CR')} m³`;
+            }
+            layer.bindPopup(contenido);
+            layer.on('mouseover', function () { this.openPopup(); });
+            layer.on('mouseout', function () { this.closePopup(); });
+          },
+          style: { color: '#333', weight: 1, fillOpacity: 0 }
+        }).addTo(map);
+      });
 
     L.control.scale({ metric: true, imperial: false, position: 'bottomleft' }).addTo(map);
   </script>
