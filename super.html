@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa de ventas gasolina súper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; }
+    #map { height: calc(100vh - 60px); }
+    .topbar {
+      background: #0052cc;
+      color: white;
+      padding: 10px 20px;
+      font-weight: bold;
+    }
+    .topbar a {
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+    }
+    .legend {
+      position: absolute;
+      bottom: 30px;
+      right: 10px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      max-width: 250px;
+      font-family: sans-serif;
+      font-size: 13px;
+      color: #333;
+    }
+    .legend h4 {
+      margin-bottom: 10px;
+      color: #0052cc;
+      font-size: 15px;
+      border-bottom: 2px solid #0052cc;
+      padding-bottom: 5px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin: 6px 0;
+    }
+    .legend-color {
+      width: 30px;
+      height: 20px;
+      margin-right: 10px;
+      border: 1px solid #333;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="index.html">← Regresar</a> Mapa de ventas gasolina súper
+  </div>
+  <div id="map"></div>
+  <div class="legend">
+    <h4>Rangos de ventas (gasolina súper)</h4>
+    <div class="legend-item"><div class="legend-color" style="background:#edf8fb;"></div><span>0 – 3000</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#b2e2e2;"></div><span>3001 – 7000</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#66c2a4;"></div><span>7001 – 12000</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#2ca25f;"></div><span>12001 – 20000</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#006d2c;"></div><span>20001+</span></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script>
+    const map = L.map('map').setView([9.9, -84.0], 9);
+
+    L.tileLayer('./Super/{z}/{x}/{y}.png', {
+      attribution: 'Datos: TileMill - Gasolina Súper',
+      minZoom: 8,
+      maxZoom: 12,
+      tileSize: 256
+    }).addTo(map);
+
+    L.control.scale({ metric: true, imperial: false, position: 'bottomleft' }).addTo(map);
+  </script>
+</body>
+</html>
