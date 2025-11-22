@@ -65,6 +65,19 @@
     <div class="legend-item"><div class="legend-color" style="background:#2171b5;"></div><span>Ventas máximas</span></div>
   </div>
 
+  <div style="position:absolute;top:10px;right:10px;z-index:1000;">
+    <button onclick="document.getElementById('info-ventas').style.display='block'" style="font-size:18px;padding:6px 12px;border:none;background:#0052cc;color:white;border-radius:6px;">ℹ️ Info</button>
+  </div>
+  <div id="info-ventas" style="display:none;position:absolute;top:60px;right:10px;z-index:1000;background:white;padding:20px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.2);max-width:300px;font-size:14px;color:#333;">
+    <b>Ventas máximas y mínimas</b><br><br>
+    Este mapa destaca los cantones con volúmenes extremos de ventas de combustible durante el año 2023. Los valores máximos corresponden a zonas urbanas y logísticas como San José, Alajuela, Cartago y Liberia, mientras que los mínimos se observan en cantones rurales como Turrubares, León Cortés y Guatuso.
+    <br><br>
+    Las diferencias reflejan densidad poblacional, actividad económica, infraestructura vial y cobertura de estaciones de servicio. Algunos cantones presentan valores nulos o ausentes, lo cual puede deberse a omisiones en el reporte, falta de infraestructura o a que el cantón fue creado recientemente y no estaba activo en el sistema de RECOPE al momento de la medición.
+    <br><br>
+    Este análisis permite identificar zonas con alta demanda energética y otras con baja cobertura, útiles para planificación territorial y evaluación de políticas públicas.
+    <br><br><button onclick="document.getElementById('info-ventas').style.display='none'" style="margin-top:10px;">Cerrar</button>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script>
     const map = L.map('map').setView([9.9, -84.0], 9);

@@ -99,5 +99,13 @@
 
     L.control.scale({ metric: true, imperial: false, position: 'bottomleft' }).addTo(map);
   </script>
+  <div style="position:absolute;top:10px;right:10px;z-index:1000;">
+  <button onclick="document.getElementById('info-diesel').style.display='block'" style="font-size:18px;padding:6px 12px;border:none;background:#0052cc;color:white;border-radius:6px;">ℹ️ Info</button>
+  </div>
+  <div id="info-diesel" style="display:none;position:absolute;top:60px;right:10px;z-index:1000;background:white;padding:20px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.2);max-width:300px;font-size:14px;color:#333;">
+    <b>Gasolina diésel</b><br><br>
+    Principal combustible para transporte pesado, maquinaria y flotas públicas. Cantones como San José (128 683 m³), Alajuela (84 991 m³) y Puntarenas (123 022 m³) lideran por actividad económica y logística. En zonas rurales como Talamanca (5 462 m³), el consumo es menor. El diésel representa más del 35% del consumo nacional, siendo clave para sectores productivos.
+    <br><br><button onclick="document.getElementById('info-diesel').style.display='none'" style="margin-top:10px;">Cerrar</button>
+  </div>
 </body>
 </html>
